@@ -1,4 +1,10 @@
-﻿using Xunit;
+﻿using Itmo.ObjectOrientedProgramming.Lab1.Models;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Contracts;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.FleetPlacementStrategy;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Minerals;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Ores;
+using Itmo.ObjectOrientedProgramming.Lab1.Models.Ships;
+using Xunit;
 
 namespace Itmo.ObjectOrientedProgramming.Lab1.Tests;
 
@@ -8,75 +14,180 @@ namespace Itmo.ObjectOrientedProgramming.Lab1.Tests;
 // прайс-лист – Tritanium 4, Pyerite 10, Mexallon 70, Isogen 150.
 public class ContractScenarioTests
 {
-    /*
-    private readonly PriceList _defaultPriceList;
-
-    public ContractScenarioTests()
-    {
-        // например:
-        _priceList = new PriceList()
-            .AddMineral(new Tritanium(), 4.0m)
-            .AddMineral(new Pyerite(),  10.0m)
-            .AddMineral(new Mexallon(), 70.0m)
-            .AddMineral(new Isogen(),  150.0m);
-    }
-    */
-
     [Fact(DisplayName = "Сценарий 1. Контракт на срок")]
     public void TimeContract_WithSingleVenture_IsCompleted()
     {
-        // Arrange: контракт на 6 ч
-        // var contract = new Contract(...);
+        var fleet = new Fleet(
+            new List<IShip>
+            {
+                new Venture(),
+            },
+            new SharedHoldStrategy());
 
-        // Act
-        // var result = calculator.Calculate(contract, ...);
+        var belt = new AsteroidBelt(
+            "Пояс A",
+            4m,
+            new Veldspar());
 
-        // Assert: выполнен; 1 рейс, время работы 6 ч, добыто 400 м³;
-        // Tritanium – 8000; выручка 32 000, аренда 6000, прибыль 26 000
-        // Assert.Equal(result.Status, ContractStatusEnum.Completed);
-        Assert.Fail("Сценарий не реализован");
+        var priceList = new Dictionary<IMineral, decimal>
+        {
+            [new Tritanium()] = 4m,
+            [new Pyerite()] = 10m,
+            [new Mexallon()] = 70m,
+            [new Isogen()] = 150m,
+        };
+
+        var contract = new TermContract(
+            belt,
+            fleet,
+            priceList,
+            6m);
+
+        var station = new Station(0m);
+        var calculator = new Calculator(station);
+
+        CalculationResult result = calculator.Calculate(contract);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(1, result.TripsCount);
+        Assert.Equal(6m, result.Time);
+        Assert.Equal(400m, result.MinedOreVolume);
+        Assert.Equal(8000, result.Minerals[new Tritanium()]);
+        Assert.Equal(32000m, result.Revenue);
+        Assert.Equal(6000m, result.RentalCost);
+        Assert.Equal(26000m, result.Profit);
     }
 
     [Fact(DisplayName = "Сценарий 2. Пустой флот")]
     public void Fleet_WithoutShips_CannotBeCreated()
     {
-        // Arrange + Act: создание флота без кораблей
-
-        // Assert: исключение
-        Assert.Fail("Сценарий не реализован");
+        Assert.Throws<ArgumentException>(() =>
+            new Fleet(
+                Array.Empty<IShip>(),
+                new SharedHoldStrategy()));
     }
 
     [Fact(DisplayName = "Сценарий 3. Контракт на объём")]
     public void VolumeContract_WithSingleVenture_IsCompleted()
     {
-        // Arrange: контракт на 1000 м³
+        var fleet = new Fleet(
+            new List<IShip>
+            {
+                new Venture(),
+            },
+            new SharedHoldStrategy());
 
-        // Act
+        var belt = new AsteroidBelt(
+            "Пояс A",
+            4m,
+            new Veldspar());
 
-        // Assert: выполнен; 3 рейса (400, 400, 200 м³), время работы 16 ч;
-        // Tritanium – 20 000; выручка 80 000, аренда 16 000, прибыль 64 000
-        Assert.Fail("Сценарий не реализован");
+        var priceList = new Dictionary<IMineral, decimal>
+        {
+            [new Tritanium()] = 4m,
+            [new Pyerite()] = 10m,
+            [new Mexallon()] = 70m,
+            [new Isogen()] = 150m,
+        };
+
+        var contract = new VolumeContract(
+            belt,
+            fleet,
+            priceList,
+            1000m);
+
+        var station = new Station(0m);
+        var calculator = new Calculator(station);
+
+        CalculationResult result = calculator.Calculate(contract);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal(3, result.TripsCount);
+        Assert.Equal(16m, result.Time);
+        Assert.Equal(1000m, result.MinedOreVolume);
+        Assert.Equal(20000, result.Minerals[new Tritanium()]);
+        Assert.Equal(80000m, result.Revenue);
+        Assert.Equal(16000m, result.RentalCost);
+        Assert.Equal(0m, result.Tax);
+        Assert.Equal(64000m, result.Profit);
     }
 
     [Fact(DisplayName = "Сценарий 4. Отклонение по сроку")]
     public void TimeContract_TooShort_IsRejected()
     {
-        // Arrange: контракт на 2 ч
+        var fleet = new Fleet(
+            new List<IShip>
+            {
+                new Venture(),
+            },
+            new SharedHoldStrategy());
 
-        // Act
+        var belt = new AsteroidBelt(
+            "Пояс A",
+            4m,
+            new Veldspar());
 
-        // Assert: отклонён – срока не хватает на один рейс
-        Assert.Fail("Сценарий не реализован");
+        var priceList = new Dictionary<IMineral, decimal>
+        {
+            [new Tritanium()] = 4m,
+            [new Pyerite()] = 10m,
+            [new Mexallon()] = 70m,
+            [new Isogen()] = 150m,
+        };
+
+        var contract = new TermContract(
+            belt,
+            fleet,
+            priceList,
+            2m);
+
+        var calculator = new Calculator(new Station(0m));
+
+        CalculationResult result = calculator.Calculate(contract);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal(
+            ContractRejectionReason.InsufficientTermForFirstTrip,
+            result.RejectionReason);
     }
 
     [Fact(DisplayName = "Сценарий 5. Отклонение по прайс-листу")]
     public void Contract_WithIncompletePriceList_IsRejected()
     {
-        // Arrange: пояс с Scordite, в прайс-листе нет цены Pyerite; контракт на 6 ч
+        var fleet = new Fleet(
+            new List<IShip>
+            {
+                new Venture(),
+            },
+            new SharedHoldStrategy());
 
-        // Act
+        var belt = new AsteroidBelt(
+            "Пояс A",
+            4m,
+            new Scordite());
 
-        // Assert: отклонён – в прайс-листе нет цены минерала из выхода руды
-        Assert.Fail("Сценарий не реализован");
+        var priceList = new Dictionary<IMineral, decimal>
+        {
+            [new Tritanium()] = 4m,
+
+            // Pyerite специально отсутствует
+            [new Mexallon()] = 70m,
+            [new Isogen()] = 150m,
+        };
+
+        var contract = new TermContract(
+            belt,
+            fleet,
+            priceList,
+            6m);
+
+        var calculator = new Calculator(new Station(0m));
+
+        CalculationResult result = calculator.Calculate(contract);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal(
+            ContractRejectionReason.MissingMineralPrice,
+            result.RejectionReason);
     }
 }
