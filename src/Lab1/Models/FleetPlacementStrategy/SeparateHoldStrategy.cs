@@ -5,7 +5,7 @@ public record SeparateHoldStrategy : IFleetPlacementStrategy
     public bool Place(
         ShipAndOccupancy ship,
         int volume,
-        FleetOccepancyState occupancyState)
+        FleetOccupancyState occupancyState)
     {
         if (volume <= ship.Ship.Hold - ship.Occupancy)
         {

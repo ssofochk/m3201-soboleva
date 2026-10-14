@@ -1,6 +1,6 @@
 ﻿namespace Itmo.ObjectOrientedProgramming.Lab1.Models;
 
-public class FleetOccepancyState
+public class FleetOccupancyState
 {
     public IReadOnlyList<ShipAndOccupancy> Ships { get; }
 
@@ -8,7 +8,7 @@ public class FleetOccepancyState
 
     public int TotalHold { get; private set; } = 0;
 
-    public FleetOccepancyState(IReadOnlyList<ShipAndOccupancy> ships)
+    public FleetOccupancyState(IReadOnlyList<ShipAndOccupancy> ships)
     {
         Ships = ships;
         foreach (ShipAndOccupancy ship in ships)

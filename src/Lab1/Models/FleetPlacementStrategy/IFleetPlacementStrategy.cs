@@ -5,5 +5,5 @@ public interface IFleetPlacementStrategy
     bool Place(
         ShipAndOccupancy ship,
         int volume,
-        FleetOccepancyState occupancyState);
+        FleetOccupancyState occupancyState);
 }

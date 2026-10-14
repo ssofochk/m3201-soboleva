@@ -5,7 +5,7 @@ public record SharedHoldStrategy : IFleetPlacementStrategy
     public bool Place(
         ShipAndOccupancy ship,
         int volume,
-        FleetOccepancyState occupancyState)
+        FleetOccupancyState occupancyState)
     {
         if (!TryPlace(volume, occupancyState)) return false;
         occupancyState.TotalOccupancy += volume;
@@ -28,7 +28,7 @@ public record SharedHoldStrategy : IFleetPlacementStrategy
 
     private bool TryPlace(
         int volume,
-        FleetOccepancyState occupancyState)
+        FleetOccupancyState occupancyState)
     {
         return occupancyState.TotalHold - occupancyState.TotalOccupancy >= volume;
     }
