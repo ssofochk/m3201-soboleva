@@ -5,9 +5,11 @@
     <File Path=".gitignore" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src\Lab1\Lab1.csproj" Type="Classic C#" />
+    <Project Path="src/Lab2/Lab2.csproj" />
+    <Project Path="src/Lab1/Lab1.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests\Lab1.Tests\Lab1.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests/Lab2.Tests/Lab2.Tests.csproj" />
+    <Project Path="tests/Lab1.Tests/Lab1.Tests.csproj" />
   </Folder>
 </Solution>
