@@ -23,7 +23,7 @@ public class Extractor : IBuilding
 
     private readonly int _workersCount;
 
-    public Extractor(PlanetType type, int workers,  Material material)
+    internal Extractor(PlanetType type, int workers,  Material material)
     {
         if (workers is < 1 or > 10)
         {

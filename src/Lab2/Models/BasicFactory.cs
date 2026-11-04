@@ -6,7 +6,7 @@ public class BasicFactory : Factory
     private readonly int _outputCount = 40;
     private readonly Material _recipeInput;
 
-    public BasicFactory(
+    internal BasicFactory(
         PlanetType type,
         RecipeCatalog recipeCatalog,
         Material recipeInput)

@@ -6,7 +6,7 @@ public class AdvancedFactory : Factory
     private readonly int _outputCount = 5;
     private readonly MaterialPair _recipeInput;
 
-    public AdvancedFactory(
+    internal AdvancedFactory(
         PlanetType type,
         RecipeCatalog recipeCatalog,
         MaterialPair recipeInput)
