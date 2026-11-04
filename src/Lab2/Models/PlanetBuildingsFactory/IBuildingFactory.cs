@@ -1,4 +1,6 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿using Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
+
+namespace Itmo.ObjectOrientedProgramming.Lab2.Models.PlanetBuildingsFactory;
 
 public interface IBuildingFactory
 {

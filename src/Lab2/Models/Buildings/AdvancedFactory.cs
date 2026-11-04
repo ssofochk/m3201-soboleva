@@ -1,4 +1,4 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
 
 public class AdvancedFactory : Factory
 {
@@ -18,6 +18,11 @@ public class AdvancedFactory : Factory
         }
 
         _recipeInput = recipeInput;
+    }
+
+    public override AdvancedFactory Clone()
+    {
+        return new AdvancedFactory(Type, RecipeCatalog, _recipeInput);
     }
 
     public override void Processing(IDictionary<Material, int> storage)

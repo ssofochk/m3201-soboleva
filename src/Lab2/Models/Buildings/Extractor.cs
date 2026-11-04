@@ -1,4 +1,4 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
 
 public class Extractor : IBuilding
 {
@@ -38,5 +38,30 @@ public class Extractor : IBuilding
         Type = type;
         _workersCount = workers;
         Material = material;
+    }
+
+    public void Processing(IDictionary<Material, int> storage)
+    {
+        AddToStorage(storage, Material, _workersCount * Type.ExtractableMaterials[Material]);
+    }
+
+    public Extractor Clone()
+    {
+        return new Extractor(Type, _workersCount, Material);
+    }
+
+    protected void AddToStorage(
+        IDictionary<Material, int> storage,
+        Material material,
+        int count)
+    {
+        if (!storage.ContainsKey(material))
+        {
+            storage.Add(material, count);
+        }
+        else
+        {
+            storage[material] += count;
+        }
     }
 }

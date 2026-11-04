@@ -1,4 +1,4 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
 
 public class CommandCenter
 {
@@ -38,4 +38,9 @@ public class CommandCenter
         5 => 19000,
         _ => throw new ArgumentOutOfRangeException(nameof(_level)),
     };
+
+    public CommandCenter Clone()
+    {
+        return new CommandCenter(Type, _level);
+    }
 }

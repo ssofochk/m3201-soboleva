@@ -1,4 +1,4 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
 
 public abstract class Factory : IBuilding
 {
@@ -22,6 +22,8 @@ public abstract class Factory : IBuilding
     }
 
     public abstract void Processing(IDictionary<Material, int> storage);
+
+    public abstract IBuilding Clone();
 
     protected void AddToStorage(
         IDictionary<Material, int> storage,

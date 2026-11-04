@@ -1,20 +1,22 @@
-﻿namespace Itmo.ObjectOrientedProgramming.Lab2.Models;
+﻿using Itmo.ObjectOrientedProgramming.Lab2.Models.Buildings;
 
-public class BarrenBuildingFactory : IBuildingFactory
+namespace Itmo.ObjectOrientedProgramming.Lab2.Models.PlanetBuildingsFactory;
+
+public class LavaBuildingFactory : IBuildingFactory
 {
     public PlanetType Type { get; }
 
     private readonly RecipeCatalog _recipeCatalog;
 
-    public BarrenBuildingFactory(RecipeCatalog recipeCatalog)
+    public LavaBuildingFactory(RecipeCatalog recipeCatalog)
     {
         Dictionary<Material, int> extractedMaterials = new()
         {
-            [new Material("Base Metals")] = 1500,
-            [new Material("Noble Metals")] = 1500,
-            [new Material("Microorganisms")] = 1000,
+            [new Material("Base Metals")] = 1000,
+            [new Material("Heavy Metals")] = 1500,
+            [new Material("Felsic Magma")] = 1500,
         };
-        Type = new("Barren", extractedMaterials);
+        Type = new("Lava", extractedMaterials);
         _recipeCatalog = recipeCatalog;
     }
 
