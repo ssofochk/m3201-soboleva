@@ -45,6 +45,8 @@ public class Extractor : IBuilding
         AddToStorage(storage, Material, _workersCount * Type.ExtractableMaterials[Material]);
     }
 
+    IBuilding IBuilding.Clone() => Clone();
+
     public Extractor Clone()
     {
         return new Extractor(Type, _workersCount, Material);

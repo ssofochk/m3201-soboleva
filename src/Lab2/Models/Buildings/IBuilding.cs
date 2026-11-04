@@ -8,5 +8,5 @@ public interface IBuilding
 
     int Pg();
 
-    IBuilding Clone() => Clone();
+    IBuilding Clone();
 }
